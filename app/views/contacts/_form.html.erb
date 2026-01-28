@@ -1,0 +1,25 @@
+<%= form_with model: @contact do |f| %>
+
+  <% if @contact.errors.any? %>
+    <div style="color:red">
+      <ul>
+        <% @contact.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div style="margin-bottom:10px">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, placeholder: "Eg: Charan", required: true %>
+  </div>
+
+  <div style="margin-bottom:10px">
+    <%= f.label :email %><br>
+    <%= f.email_field :email, placeholder: "charan@gmail.com", required: true %>
+  </div>
+
+  <%= f.submit class: "btn btn-success" %>
+
+<% end %>

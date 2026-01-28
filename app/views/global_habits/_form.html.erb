@@ -1,0 +1,17 @@
+<%= form_with model: @global_habit, local: true do |f| %>
+  <div>
+    <%= f.label :title, "Habit Name" %><br>
+    <%= f.text_field :title, required: true %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= f.label :active %>
+    <%= f.check_box :active %>
+  </div>
+
+  <br>
+
+  <%= f.submit %>
+<% end %>

@@ -1,0 +1,13 @@
+<h2>Edit Note</h2>
+
+<%= form_with model: @note, local: true do |f| %>
+  <div>
+    <%= f.text_area :note, rows: 4 %>
+  </div>
+
+  <br>
+  <%= f.submit "Update Note" %>
+<% end %>
+
+<br>
+<%= link_to "Back to Notes", notes_path %>

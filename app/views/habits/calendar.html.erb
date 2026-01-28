@@ -1,0 +1,43 @@
+<h2>Habit Calendar</h2>
+
+<div>
+  <%= link_to "⬅ Previous",
+      calendar_habits_path(date: @date.prev_month) %>
+
+  <strong><%= @date.strftime("%B %Y") %></strong>
+
+  <%= link_to "Next ➡",
+      calendar_habits_path(date: @date.next_month) %>
+</div>
+<table border="1" cellpadding="10">
+  <tr>
+    <% Date::DAYNAMES.each do |day| %>
+      <th><%= day %></th>
+    <% end %>
+  </tr>
+
+  <% first_day = @date.beginning_of_month.beginning_of_week %>
+  <% last_day  = @date.end_of_month.end_of_week %>
+
+  <% (first_day..last_day).to_a.in_groups_of(7) do |week| %>
+    <tr>
+      <% week.each do |day| %>
+        <td valign="top">
+          <strong><%= day.day %></strong>
+
+          <% if @habits_by_date[day] %>
+            <% @habits_by_date[day].each do |habit| %>
+              <div>
+                <%= habit.completed ? "✅" : "❌" %>
+                <%= habit.title %>
+              </div>
+            <% end %>
+          <% end %>
+
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to "Back", habits_path %> 

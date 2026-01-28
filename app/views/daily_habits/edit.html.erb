@@ -1,0 +1,25 @@
+<h2>Edit Daily Habit</h2>
+
+<%= form_with model: @daily_habit, local: true do |f| %>
+
+  <%# Show title only if it's a custom daily habit %>
+  <% if @daily_habit.global_habit_id.nil? %>
+    <div>
+      <%= f.label :title, "Habit Title" %><br>
+      <%= f.text_field :title, required: true %>
+    </div>
+    <br>
+  <% end %>
+
+  <div>
+    <%= f.label :completed %>
+    <%= f.check_box :completed %>
+  </div>
+
+  <br>
+
+  <%= f.submit "Update Habit" %>
+<% end %>
+
+<%= link_to "⬅ Back",
+      daily_habits_path(date: @daily_habit.date) %>

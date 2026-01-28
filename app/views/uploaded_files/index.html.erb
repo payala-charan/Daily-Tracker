@@ -1,0 +1,47 @@
+<h2>Your Files</h2>
+
+<%= link_to "Upload New File", new_uploaded_file_path %>
+
+<table border="1" cellpadding="10">
+  <tr>
+    <th>File Name</th>
+    <th>Title</th>
+    <th>Actions</th>
+  </tr>
+
+  <% @files.each do |file| %>
+    <tr>
+      <td>
+        <% if file.file.attached? %>
+          <%= file.file.filename %>
+        <% else %>
+          No File
+        <% end %>
+      </td>
+
+      <td><%= file.title %></td>
+
+      <td>
+        <!-- DOWNLOAD -->
+        <% if file.file.attached? %>
+          <%= link_to "Download",
+              rails_blob_path(file.file, disposition: "attachment"),
+              class: "btn" %>
+        <% end %>
+
+        |
+
+        <!-- EDIT -->
+        <%= link_to "Edit", edit_uploaded_file_path(file) %>
+
+        |
+
+        <!-- DELETE -->
+        <%= button_to "Delete",
+              uploaded_file_path(file),
+              method: :delete,
+              data: { confirm: "Are you sure?" } %>
+      </td>
+    </tr>
+  <% end %>
+</table>

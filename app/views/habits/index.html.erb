@@ -1,0 +1,39 @@
+<h1>Today's Habits</h1>
+<%= link_to "📅 View Calendar", calendar_habits_path %><br>
+<%= link_to "Add Habit", new_habit_path %>
+
+<table border="1" cellpadding="10">
+  <tr>
+    <th>Done</th>
+    <th>Habit</th>
+    <th>Actions</th>
+    <th>Streak</th>
+  </tr>
+
+  <% @habits.each do |habit| %>
+    <tr>
+      <td>
+        <%= form_with model: habit, local: true do |f| %>
+          <%= f.check_box :completed, { onchange: "this.form.submit();" } %>
+        <% end %>
+      </td>
+
+      <td style="text-decoration: <%= habit.completed ? 'line-through' : 'none' %>;">
+        <%= habit.title %>
+      </td>
+
+      <td>
+        <%= link_to "Edit", edit_habit_path(habit) %> |
+        <%= button_to "Delete", habit_path(habit), method: :delete %>
+      </td>
+      <td>
+        <% if habit.streak > 0 %>
+            🔥 <%= habit.streak %> days
+        <% else %>
+            —
+        <% end %>
+      </td>
+
+    </tr>
+  <% end %>
+</table>

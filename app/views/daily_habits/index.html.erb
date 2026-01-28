@@ -1,0 +1,32 @@
+<h2>Daily Habits – <%= @date.strftime("%d %b %Y") %></h2>
+
+<div style="margin-bottom: 15px;">
+  <%= link_to "➕ Add Custom Daily Habit",
+        new_daily_habit_path(date: @date) %> |
+  <%= link_to "⚙️ Manage Global Habits", global_habits_path %>
+</div>
+
+<hr>
+
+<% @daily_habits.each do |habit| %>
+  <div style="margin-bottom: 10px;">
+    <%= form_with model: habit, method: :patch, local: true do |f| %>
+      <%= f.check_box :completed, onchange: "this.form.submit()" %>
+
+      <strong>
+        <%= habit.global_habit&.title || habit.title %>
+      </strong>
+    <% end %>
+    <%= link_to "✏️ Edit",
+            edit_daily_habit_path(habit),
+            style: "font-size:13px" %>
+    <%= button_to "🗑️ Delete",
+            daily_habit_path(habit),
+            method: :delete,
+            data: { confirm: "Delete this habit?" },
+            style: "font-size:13px" %>
+  </div>
+<% end %>
+
+
+

@@ -1,0 +1,46 @@
+<h1>My Targets 🎯</h1>
+
+<%= link_to "New Target", new_target_path %>
+
+<hr>
+
+<% @targets.each do |target| %>
+  <div style="margin-bottom: 25px; padding: 15px; border: 1px solid #ddd; border-radius: 10px;">
+
+    <h3><%= target.target_name %></h3>
+
+    <p>
+      📅 Target Date:
+      <b><%= target.target_date.strftime("%d %B %Y") %></b>
+    </p>
+
+    
+    <% if target.days_left > 0 %>
+      <p>⏳ <b><%= target.days_left %></b> days left</p>
+    <% else %>
+      <p style="color:red;">❌ Target date passed</p>
+    <% end %>
+    
+
+    <!-- Progress Bar -->
+    <div style="background:#eeb; height:12px; border-radius:8px; overflow:hidden;">
+      <div style="
+        width: <%= target.progress_percentage %>%;
+        background: <%= target.days_left <= 0 ? '#pc1245' : '#17a34b' %>;
+        height: 100%;
+        transition: width 0.5s;">
+      </div>
+    </div>
+
+    <small><%= target.progress_percentage %>% time used</small>
+    <br>
+
+    <br><br>
+
+    <%= link_to "Edit", edit_target_path(target) %> |
+    <%= button_to "Delete",
+          target_path(target),
+          method: :delete,
+          data: { confirm: "Are you sure?" } %>
+  </div>
+<% end %>

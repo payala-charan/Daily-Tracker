@@ -1,0 +1,55 @@
+<h1>Income</h1>
+
+<%= form_with model: @income, url: incomes_path, local: true do |f| %>
+  <%= f.text_field :title, placeholder: "Title" %>
+  <%= f.number_field :amount, step: 1 %>
+  <%= f.submit "Add Income" %>
+<% end %>
+
+<br>
+<h1>Expenditure</h1>
+
+<%= form_with model: @expenditure, url: expenditures_path, local: true do |f| %>
+  <%= f.text_field :title, placeholder: "Title" %>
+  <%= f.number_field :amount, step: 1 %>
+  <%= f.submit "Add Expenditure" %>
+<% end %>
+
+
+<h2>Balance</h2>
+
+<h1 style="color: <%= @balance >= 0 ? 'green' : 'red' %>;">
+  ₹ <%= @balance %>
+</h1>
+
+<p>Total Income: ₹ <%= @total_income %></p>
+<p>Total Expenditure: ₹ <%= @total_expenditure %></p>
+
+
+<h2>Income List</h2>
+<ul>
+  <% @incomes.each do |income| %>
+    <li>
+      <%= income.title %> - ₹<%= income.amount %>
+
+      <%= link_to "Edit", edit_income_path(income) %> |
+      <%= button_to "Delete", income_path(income),
+            method: :delete,
+            data: { confirm: "Are you sure?" } %>
+    </li>
+  <% end %>
+</ul>
+
+<h2>Expenditure List</h2>
+<ul>
+  <% @expenditures.each do |exp| %>
+    <li>
+      <%= exp.title %> - ₹<%= exp.amount %>
+
+      <%= link_to "Edit", edit_expenditure_path(exp) %> |
+      <%= button_to "Delete", expenditure_path(exp),
+            method: :delete,
+            data: { confirm: "Are you sure?" } %>
+    </li>
+  <% end %>
+</ul>

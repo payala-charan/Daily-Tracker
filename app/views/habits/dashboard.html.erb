@@ -1,0 +1,82 @@
+<h1>Habit Dashboard</h1>
+
+<h3><%= @month.strftime("%B %Y") %></h3>
+
+<div style="display:flex; justify-content:space-between; align-items:center;">
+  <%= link_to "⬅ Previous",
+      habits_dashboard_path(month: (@month - 1.month).strftime("%Y-%m")),
+      style: "font-size:14px" %>
+
+  <h3><%= @month.strftime("%B %Y") %></h3>
+
+  <%= link_to "Next ➡",
+      habits_dashboard_path(month: (@month + 1.month).strftime("%Y-%m")),
+      style: "font-size:14px" %>
+</div>
+
+<div style="display:grid; grid-template-columns: repeat(7, 1fr); gap:10px;">
+
+  <% ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].each do |day| %>
+    <strong style="text-align:center"><%= day %></strong>
+  <% end %>
+
+  <% first_day = @month.beginning_of_week(:sunday) %>
+  <% last_day  = @end_month.end_of_week(:sunday) %>
+
+ <% (first_day..last_day).each do |date| %>
+  <% habits = @calendar_data[date] || [] %>
+  <% total = habits.count %>
+  <% completed = habits.count(&:completed) %>
+  <% pending = total - completed %>
+
+  <% bg_color =
+      if total == 0
+        "#f9f9f9"
+      elsif completed == total
+        "#e8f7e8"   # green
+      elsif completed > 0
+        "#fff7e0"   # yellow
+      else
+        "#fdeaea"   # red
+      end
+  %>
+
+  <div style="
+    border:1px solid #ddd;
+    padding:8px;
+    min-height:100px;
+    background:<%= bg_color %>;
+  ">
+
+    <strong><%= date.day %></strong>
+
+    <% if total > 0 %>
+      <div style="margin-top:6px; font-size:13px">
+        ✅ <%= completed %> completed
+      </div>
+
+      <div style="font-size:13px">
+        ❌ <%= pending %> pending
+      </div>
+
+      <div style="font-size:12px; margin-top:4px;">
+        <% if completed == total %>
+          🟢 All Done
+        <% elsif completed > 0 %>
+          🟡 In Progress
+        <% else %>
+          🔴 Not Started
+        <% end %>
+      </div>
+    <% else %>
+      <div style="font-size:12px; color:#999">No habits</div>
+    <% end %>
+
+    <%= link_to "Open",
+        daily_habits_path(date: date),
+        style: "display:block; margin-top:6px; font-size:12px" %>
+
+  </div>
+<% end %>
+<%= link_to "Back", habits_path %> 
+</div>

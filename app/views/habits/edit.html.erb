@@ -1,0 +1,16 @@
+<h2>Edit Habit</h2>
+
+<%= form_with model: @habit, local: true do |f| %>
+  <div>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.check_box :completed %>
+    <%= f.label :completed, "Completed" %>
+  </div>
+
+  <%= f.submit "Update Habit" %>
+<% end %>
+<%= link_to "Back", habits_path %> 

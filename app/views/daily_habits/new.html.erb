@@ -1,0 +1,13 @@
+<h2>Add Daily Habit</h2>
+
+<%= form_with model: @habit, local: true do |f| %>
+  <%= f.hidden_field :date, value: @date %>
+
+  <div>
+    <%= f.label :title, "Habit Name" %><br>
+    <%= f.text_field :title %>
+  </div>
+
+  <%= f.submit "Add Habit" %>
+<% end %>
+<%= link_to "back", daily_habits_path %> 

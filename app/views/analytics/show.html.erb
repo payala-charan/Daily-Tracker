@@ -1,0 +1,63 @@
+
+<h2>Analytics Result</h2>
+
+<p>
+  <b>Type:</b> <%= @data_type&.capitalize %><br>
+  <b>Period:</b> <%= @analysis_type&.capitalize %>
+</p>
+
+<h3>Total Amount: ₹ <%= @total_amount %></h3>
+
+<hr>
+
+<% if @data_type == "expense" && @category_data&.present? %>
+
+  <h3>Category Breakdown</h3>
+
+  <table border="1" cellpadding="10">
+    <tr>
+      <th>Category</th>
+      <th>Amount</th>
+      <th>Percentage</th>
+    </tr>
+
+    <% @category_data.each do |data| %>
+      <tr>
+        <td><%= data[:category] %></td>
+        <td>₹ <%= data[:amount] %></td>
+        <td><%= data[:percentage] %> %</td>
+      </tr>
+    <% end %>
+  </table>
+
+  <hr>
+
+  <h3>Visual Analytics</h3>
+
+  <canvas id="chart" width="10" height="10"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      new Chart(document.getElementById("chart"), {
+        type: 'pie',
+        data: {
+          labels: <%= raw @category_data.map { |d| d[:category] }.to_json %>,
+          datasets: [{
+            data: <%= raw @category_data.map { |d| d[:amount] }.to_json %>,
+            backgroundColor: [
+              '#22c55e', '#3b82f6', '#f97316',
+              '#ef4444', '#a855f7', '#14b8a6'
+            ]
+          }]
+        }
+      });
+    });
+  </script>
+
+<% else %>
+
+  <h3>No category-based analytics available</h3>
+
+<% end %>

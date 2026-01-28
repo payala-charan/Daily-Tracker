@@ -1,0 +1,31 @@
+<h2>My Notes</h2>
+
+<%= form_with model: @note, local: true do |f| %>
+  <div>
+    <%= f.text_area :note, rows: 4, placeholder: "Write your note..." %>
+  </div>
+  <br>
+  <%= f.submit "Save Note" %>
+<% end %>
+
+<hr>
+
+<h3>All Notes</h3>
+
+<% @notes.each do |note| %>
+  <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+    <p><%= note.note %></p>
+
+    <small>
+      <%= note.created_at.strftime("%d %b %Y, %I:%M %p") %>
+    </small>
+
+    <br><br>
+
+    <%= link_to "Edit", edit_note_path(note) %> |
+    <%= button_to "Delete",
+                note_path(note),
+                method: :delete,
+                data: { confirm: "Are you sure?" } %>
+  </div>
+<% end %>

@@ -1,0 +1,28 @@
+<h2>My Meetings</h2>
+
+<%= link_to "Schedule New Meeting", new_meeting_path %>
+
+<hr>
+
+<% @meetings.each do |meeting| %>
+  <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+    <h4><%= meeting.title %></h4>
+
+    <p>
+      📅 <%= meeting.meeting_date.strftime("%d %b %Y") %><br>
+      ⏰ <%= meeting.meeting_time.strftime("%I:%M %p") %>
+    </p>
+
+    <p>
+      👥 Participants: <% meeting.participants.each do |email| %>
+                        <li><%= email %></li>
+                      <% end %>
+    </p>
+
+    <%= link_to "Edit", edit_meeting_path(meeting) %> |
+    <%= button_to "Delete",
+                meeting_path(meeting),
+                method: :delete,
+                data: { confirm: "Are you sure?" } %>
+  </div>
+<% end %>

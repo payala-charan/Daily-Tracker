@@ -1,0 +1,16 @@
+<h2>New Habit</h2>
+
+<%= form_with model: @habit, local: true do |f| %>
+  <div>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :date %>
+    <%= f.date_field :date %>
+  </div>
+
+  <%= f.submit "Create Habit" %>
+<% end %>
+<%= link_to "Back", habits_path %> 

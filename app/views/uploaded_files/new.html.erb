@@ -1,0 +1,15 @@
+<h2>Upload File</h2>
+
+<%= form_with model: @file, local: true do |f| %>
+  <div>
+    <%= f.label :file %>
+    <%= f.file_field :file %>
+  </div>
+  <div>
+    <%= f.label :title, "File Title" %><br>
+    <%= f.text_field :title, placeholder: "Eg: January Expense Report" %>
+  </div>  
+
+  <%= f.submit "Upload" %>
+<% end %>
+<%= link_to "Back", uploaded_files_path %> 

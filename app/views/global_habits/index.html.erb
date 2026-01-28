@@ -1,0 +1,24 @@
+<h2>Your Global Habits</h2>
+
+<%= link_to "Add New Habit", new_global_habit_path %>
+
+<table border="1" cellpadding="8">
+  <tr>
+    <th>Title</th>
+    <th>Status</th>
+    <th>Actions</th>
+  </tr>
+
+  <% @global_habits.each do |habit| %>
+    <tr>
+      <td><%= habit.title %></td>
+      <td><%= habit.active ? "Active" : "Inactive" %></td>
+      <td>
+        <%= link_to "Edit", edit_global_habit_path(habit) %> |
+        <%= button_to "Delete", global_habit_path(habit),
+              method: :delete,
+              data: { confirm: "Are you sure?" } %>
+      </td>
+    </tr>
+  <% end %>
+</table>

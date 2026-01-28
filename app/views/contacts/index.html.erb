@@ -1,0 +1,36 @@
+<h1>My Contacts</h1>
+
+<%= link_to "➕ Add Contact", new_contact_path, class: "btn btn-primary" %>
+
+<table border="1" cellpadding="8" cellspacing="0" style="margin-top:15px; width:100%">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @contacts.each do |contact| %>
+      <tr>
+        <td><%= contact.name %></td>
+        <td><%= contact.email %></td>
+        <td>
+          <%= link_to "Edit", edit_contact_path(contact) %> |
+          <%= button_to "Delete", contact_path(contact),
+                method: :delete,
+                data: { confirm: "Are you sure?" } %>
+        </td>
+      </tr>
+    <% end %>
+
+    <% if @contacts.empty? %>
+      <tr>
+        <td colspan="3" style="text-align:center; color:#999">
+          No contacts added yet
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

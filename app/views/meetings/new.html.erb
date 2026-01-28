@@ -1,0 +1,75 @@
+<h2>Schedule Meeting</h2>
+
+<% if flash[:alert] %>
+  <p style="color:red"><%= flash[:alert] %></p>
+<% end %>
+
+<%= form_with model: @meeting, local: true do |f| %>
+
+  <div>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :meeting_date %><br>
+    <%= f.date_field :meeting_date %>
+  </div>
+
+  <div>
+    <%= f.label :meeting_time %><br>
+    <%= f.time_field :meeting_time %>
+  </div>
+
+  <div>
+    <label>Participants (Name or Email)</label>
+
+    <div id="participants-container">
+      <div class="participant-field">
+        <input
+          type="text"
+          name="meeting[participants][]"
+          list="contacts-list"
+          placeholder="Charan or charan@gmail.com"
+        >
+        <button type="button" onclick="removeParticipant(this)">Remove</button>
+      </div>
+    </div>
+
+    <br>
+    <button type="button" onclick="addParticipant()">Add Participant</button>
+  </div>
+
+  <br>
+  <%= f.submit "Save Meeting" %>
+
+<% end %>
+
+<%= link_to "Back", meetings_path %>
+
+<datalist id="contacts-list">
+  <% @contacts&.each do |c| %>
+    <option value="<%= c.name %>"></option>
+    <option value="<%= c.email %>"></option>
+  <% end %>
+</datalist>
+<script>
+  function addParticipant() {
+    const container = document.getElementById("participants-container");
+
+    const div = document.createElement("div");
+    div.classList.add("participant-field");
+
+    div.innerHTML = `
+      <input type="text" name="meeting[participants][]" list="contacts-list"
+        placeholder="Name or Email">
+      <button type="button" onclick="removeParticipant(this)">Remove</button>
+    `;
+
+    container.appendChild(div);
+  }
+
+  function removeParticipant(button) {
+    button.parentElement.remove();
+  }
+</script>

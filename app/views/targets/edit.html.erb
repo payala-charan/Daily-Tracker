@@ -1,0 +1,23 @@
+<h2>Edit Target ✏️</h2>
+
+<%= form_with model: @target do |f| %>
+  <div>
+    <%= f.label :target_name %><br>
+    <%= f.text_field :target_name %>
+  </div>
+
+  <div>
+    <%= f.label :target_date %><br>
+    <%= f.date_field :target_date %>
+  </div>
+
+  <div>
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+
+  <br>
+  <%= f.submit "Update Target" %>
+<% end %>
+
+<%= link_to "Back", targets_path %>

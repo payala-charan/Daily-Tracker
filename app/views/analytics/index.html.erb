@@ -1,0 +1,28 @@
+
+<h1>Analytics Dashboard</h1>
+
+<%= form_with url: analytics_result_path, method: :get, data: { turbo: false } do %>
+
+  <div>
+    <label>Data Type</label>
+    <select name="data_type">
+      <option value="expense">Expense</option>
+      <option value="income">Income</option>
+      <option value="expenditure">Expenditure</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Analysis Type</label>
+    <select name="analysis_type">
+      <option value="weekly">Weekly</option>
+      <option value="monthly">Monthly</option>
+      <option value="quarterly">Quarterly</option>
+      <option value="yearly">Yearly</option>
+    </select>
+  </div>
+
+  <%= submit_tag "Analyze" %>
+
+<% end %>
+
