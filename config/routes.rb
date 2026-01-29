@@ -44,7 +44,8 @@ Rails.application.routes.draw do
   get  "/analytics", to: "analytics#index"
   get "/analytics/result", to: "analytics#show", as: :analytics_result
   #post "/analytics", to: "analytics#show"
-
+  get "downloads", to: "downloads#index"
+  get "downloads/export", to: "downloads#export"
 
   #post "/balance", to:
   resources :expenses, only: [:index, :create, :edit, :update, :destroy]
